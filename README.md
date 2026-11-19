@@ -2,6 +2,18 @@
 
 A personalised portfolio that begins as a calm, credible career website and gradually becomes a fictional horror story as you scroll.
 
+## Publish as a normal website
+
+The tested, self-contained website is committed at `docs/index.html` with `docs/.nojekyll`. GitHub can serve it directly without installing dependencies.
+
+1. Open [this repository’s Pages settings](https://github.com/strawzy96/playground/settings/pages).
+2. Under **Build and deployment**, choose **Deploy from a branch**.
+3. Select branch **main**, folder **/docs**, then **Save**.
+
+GitHub will display the live URL after its first deployment. The expected project URL is `https://strawzy96.github.io/playground/`; it has not yet been verified live. Publishing the Git branch alone does not enable Pages. Alternatively, select GitHub Actions as the Pages source and manually run the prepared “Publish portfolio to GitHub Pages” workflow.
+
+The cloud environment currently blocks the GitHub configuration API, so the one-time Pages setting could not be applied automatically. The uploaded page was fetched back through the authenticated Git connection and verified byte-for-byte against the tested build.
+
 ## Open the experience
 
 The downloadable ZIP contains **Michael-McStraw.html**. Extract it and open that file in a modern desktop browser. All art, styles, icons and code are embedded: no account, installation or internet connection is needed.
@@ -38,7 +50,7 @@ npm test           # Chromium browser checks; starts/reuses the dev server
 
 Tests use `/usr/bin/chromium`; set `CHROMIUM_PATH` to use another installed Chromium executable. Browser/server commands may need standard runtime approval in restricted cloud sandboxes.
 
-The normal production site is `dist/index.html` plus `dist/assets/`. The self-contained edition is `dist/Michael-McStraw.html`. Build/package output and browser captures are ignored by Git. This task does not deploy or publish the website.
+The normal production site is `dist/index.html` plus `dist/assets/`. The self-contained edition is `dist/Michael-McStraw.html`. Build/package output and browser captures are ignored by Git. The source is uploaded to the requested GitHub repository. Pages activation still requires the one-time setting described above.
 
 ## Verification
 
