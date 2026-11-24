@@ -1,4 +1,4 @@
-import { readFile,writeFile } from 'node:fs/promises';
+import { mkdir,readFile,writeFile } from 'node:fs/promises';
 let html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
 const script=html.match(/<script\b[^>]*src="([^"]+)"[^>]*><\/script>/);
 const style=html.match(/<link\b[^>]*href="([^"]+\.css)"[^>]*>/);
@@ -7,4 +7,7 @@ const asset=path=>new URL(`../dist/${path.replace(/^\//,'')}`,import.meta.url);
 const js=await readFile(asset(script[1]),'utf8'),css=await readFile(asset(style[1]),'utf8');
 html=html.replace(script[0],()=>`<script type="module">${js.replace(/<\/script/gi,'<\\/script')}</script>`).replace(style[0],()=>`<style>${css.replace(/<\/style/gi,'<\\/style')}</style>`);
 await writeFile(new URL('../dist/Michael-McStraw.html',import.meta.url),html);
-console.log('Standalone edition: dist/Michael-McStraw.html');
+await mkdir(new URL('../docs/',import.meta.url),{recursive:true});
+await writeFile(new URL('../docs/index.html',import.meta.url),html);
+await writeFile(new URL('../docs/.nojekyll',import.meta.url),'');
+console.log('Standalone edition: dist/Michael-McStraw.html; GitHub Pages: docs/index.html');
