@@ -119,6 +119,18 @@ export default function App(){
             <p>I go home and carry every unfinished thing through the front door with me.</p>
             <p>Music is on. A game is open. Someone is talking. I’m watching for a notification.</p>
             <p>The anxiety doesn’t clock off. It gets into the small, ordinary parts of a life until they all look like something I’ve forgotten to fix.</p>
+            <aside className="care-and-coping" aria-label="Fictional reflections on care and coping">
+              <span className="care-framing">FICTIONAL INNER MONOLOGUE / CARE & COPING</span>
+              <div className="care-support">
+                <h3>Something that helps.</h3>
+                <p>My prescribed medical cannabis helps me find a little calm. A little room to breathe. A reminder that I deserve care as well as being useful.</p>
+              </div>
+              <div className="coping-shadow">
+                <span>THE VOICE UNDERNEATH</span>
+                <blockquote>The job has turned me to substance abuse.</blockquote>
+                <p>That’s the sentence this exhausted version of me keeps writing.</p>
+              </div>
+            </aside>
             <p>They call it resilience when I keep answering.</p>
             <p className="note-revelation">I don’t know where<br/>the job stops<br/>and I start.</p>
             <div className="fracture-lines" aria-label="The fictional narrator’s thoughts fragment"><p>I can fix it.</p><p>I can fix it.</p><p>I can fix</p><p>I can</p><p>I</p></div>
