@@ -106,9 +106,14 @@ for (const width of [375, 390]) {
     await menu.click();
     await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'About', exact: true }).click();
     await expect(page.getByRole('button', { name: 'Open navigation', exact: true })).toHaveAttribute('aria-expanded', 'false');
-    for (const id of ['home', 'about', 'work', 'beyond', 'unwritten', 'continuity', 'with-you', 'handover', 'contact']) {
+    for (const id of ['home', 'about', 'work', 'beyond', 'unwritten', 'continuity', 'with-you', 'united', 'handover', 'contact']) {
       await scene(page, id);
       expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), `${id} must not overflow`).toBeLessThanOrEqual(1);
+      if (id === 'united') {
+        await page.locator('#united .united-evidence').screenshot({ path: `.local/united-facts-mobile-${width}.png`, animations: 'disabled' });
+        const dalot = page.locator('#united [data-player="Diogo Dalot"]');
+        expect(await dalot.evaluate(element => element.scrollWidth - element.clientWidth), 'the featured Dalot note must fit').toBeLessThanOrEqual(1);
+      }
     }
     await expect(phase(page)).toHaveAttribute('data-phase', 'dark');
     await page.screenshot({ path: `.local/personal-horror-finale-mobile-${width}.png`, fullPage: false });
@@ -214,4 +219,75 @@ test('Waterstons reassurance becomes an explicitly fictional shrinking refrain',
   expect(counts.every((count, index) => index === 0 || count <= counts[index - 1])).toBe(true);
   expect(counts.filter((count, index) => index > 0 && count < counts[index - 1]).length).toBeGreaterThanOrEqual(3);
   await refrain.screenshot({ path: '.local/company-refrain.png', animations: 'disabled' });
+});
+
+test('United fandom develops into a dated factual snapshot with distinct Dalot-first certificate satire', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await scene(page, 'beyond');
+  await expect(page.locator('#beyond .interest-grid')).toContainText('Manchester United. A bit of darts.');
+
+  await scene(page, 'united');
+  const united = page.locator('#united');
+  await expect(phase(page)).toHaveAttribute('data-phase', 'breach');
+  await expect(united.getByRole('heading', { name: 'The final straw wore red.', exact: true })).toBeVisible();
+  await expect(united).toContainText('FICTIONAL PERSONAL HORROR');
+  const evidence = united.locator('.united-evidence');
+  await expect(evidence).toContainText('FACTUAL SNAPSHOT / 2026/27 Premier League');
+  await expect(evidence.locator('.united-coverage')).toContainText('Snapshot: 27 November 2026');
+  await expect(evidence.locator('.united-coverage')).toContainText('Gameweek 11 complete · league results through 23 November');
+  const facts = await evidence.locator('.united-stat-grid > div').evaluateAll(rows => Object.fromEntries(rows.map(row => [row.querySelector('dt')?.textContent, row.querySelector('dd')?.textContent])));
+  expect(facts).toEqual({
+    'LEAGUE POSITION': '19th',
+    'WINS / MATCHES': '1 / 11',
+    'POINTS / POSSIBLE': '8 / 33',
+    'GOALS CONCEDED': '23',
+    'CLEAN SHEETS': '0',
+    'GAMES WITHOUT A WIN': '9',
+  });
+  const results = evidence.getByRole('region', { name: 'Verified match results', exact: true }).getByRole('listitem');
+  await expect(results).toHaveCount(4);
+  await expect(results.last()).toContainText('22 Nov 2026');
+  await expect(results.last()).toContainText('Liverpool – Manchester United');
+  await expect(results.last()).toContainText('4–0');
+  await expect(evidence.locator('.united-source-note')).toContainText('assists use FPL’s definition');
+  await expect(evidence.locator('.united-source-note')).toContainText('fixed snapshot, not a live table');
+  await expect(evidence.getByRole('link', { name: 'Results snapshot', exact: true })).toHaveAttribute('href', 'https://raw.githubusercontent.com/nr-jp/fpl-mirror/b81b2e0819357c1b4f8f5a879f221881a9701e16/data/latest/fixtures.json');
+  await expect(evidence.getByRole('link', { name: 'Player & team snapshot', exact: true })).toHaveAttribute('href', 'https://raw.githubusercontent.com/nr-jp/fpl-mirror/b81b2e0819357c1b4f8f5a879f221881a9701e16/data/latest/bootstrap-static.json');
+  await expect(evidence.getByRole('link', { name: 'Independent dated FPL cache', exact: true })).toHaveAttribute('href', /\/cache\/2026\/11\/27\/0755\.json\.xz$/);
+  for (const link of await evidence.getByRole('link').all()) {
+    await expect(link).toHaveAttribute('target', '_blank');
+    await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  }
+  await evidence.screenshot({ path: '.local/united-facts.png', animations: 'disabled' });
+
+  await expect(united.locator('.united-margin-note')).toContainText('The following match notes belong to the fictional narrator.');
+  await expect(united.locator('.united-notes-title')).toContainText('FICTIONAL MATCH NOTES / FOOTBALL SATIRE');
+  const firstPlayer = united.locator('.united-player-note').first();
+  await expect(firstPlayer).toHaveAttribute('data-player', 'Diogo Dalot');
+  await expect(firstPlayer.getByRole('heading', { name: 'Diogo Dalot', exact: true })).toBeVisible();
+  await expect(firstPlayer.locator('.united-certificate')).toHaveText('HOSTNAME MISMATCH / DALOT.EXPIRED');
+  await expect(firstPlayer.locator('.united-player-stat')).toHaveText('Recorded: 802 league minutes · 9 starts · 0 goals · 0 FPL assists');
+  await expect(firstPlayer.locator('.united-player-monologue')).toContainText('OCSP responder');
+  await expect(firstPlayer.locator('.united-player-monologue')).toContainText('change request against a right-back');
+  await firstPlayer.screenshot({ path: '.local/united-dalot.png', animations: 'disabled' });
+});
+
+test('the United spiral warns, continues to the handover and offers a working way out', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await scene(page, 'united');
+  const warning = page.locator('#united .united-warning');
+  await warning.scrollIntoViewIfNeeded();
+  await expect(warning).toContainText('DO NOT REFRESH THE TABLE.');
+  await expect(warning).toContainText('Just check it once more.');
+  const continuation = warning.getByRole('link', { name: 'Just check the score once more', exact: true });
+  await expect(continuation).toHaveAttribute('href', '#handover');
+  await continuation.click();
+  await expect(page).toHaveURL(/#handover$/);
+  await expect(page.locator('#handover').getByRole('heading', { name: 'IT has ruined my life.', exact: true })).toBeInViewport();
+  await scene(page, 'united');
+  await warning.getByRole('button', { name: 'Return to daylight', exact: true }).click();
+  await expect(phase(page)).toHaveAttribute('data-phase', 'normal');
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(5);
 });

@@ -30,6 +30,14 @@ The after-hours monologues, anxiety transcript, unsent letter, hiring warning, r
 
 The original SVG corridor has a clean and haunted version. Scroll progress reveals four phases; the final “Hire me anyway” choice opens a further close encounter. Contradictory warnings invite the visitor onward while keeping genuine exits and normal scrolling available. There are no external image/font/CDN requests. No strobing, autoplay sound, browser traps or fake system dialogs are used. Reduced-motion preferences preserve the narrative with static imagery and copy.
 
+## Manchester United snapshot
+
+At the user’s request, the fictional spiral includes United fandom as the final straw and absurd player/certificate comparisons, with Diogo Dalot the narrator’s main grievance. Sporting insults and TLS comparisons are explicitly labelled fan satire; they are not statistics or claims about the players off the pitch.
+
+The separate factual panel uses a fixed **27 November 2026 / 2026–27 Premier League** snapshot, with gameweek 11 completed and league results through 23 November. United’s record is 11 played, 1 win, 5 draws, 5 losses, 8 points, 14 scored, 23 conceded and no clean sheets; the snapshot places them 19th. The latest United result is Liverpool 4–0 United on 22 November. Source links in the page are pinned to a public FPL mirror commit, with a separate dated cache as a cross-check. Player assists are FPL assists, which can differ from official league assists. This is not a live table.
+
+See [research/united-2026-27.md](research/united-2026-27.md) for evidence, exact immutable source URLs, cutoff rules, calculations and the player figures used. Updating the snapshot requires rechecking the underlying data and dates; do not silently carry these values forward as current.
+
 ## Develop
 
 Requirements: Node.js 22.12+ or 24 LTS, npm. Validated with Node 24.19.0.
